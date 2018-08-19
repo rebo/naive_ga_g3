@@ -1,8 +1,8 @@
-use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector,
-};
+#![allow(suspicious_arithmetic_impl)]
 
-use std::ops::{Add, BitXor, Mul, Neg, Sub};
+use super::super::{Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Vector};
+
+use std::ops::{Add, BitXor, Mul, Sub};
 
 impl Add<Vector> for Vector {
     type Output = Vector;
@@ -42,12 +42,12 @@ impl BitXor<Vector> for Vector {
         // (ae1^fe3 + be2^fe3 + ce3^fe3))
 
         let b0 = Bivector::zero();
-        let bde21 = Bivector::from(Bivector_e12(self.e2*rhs.e1));
-        let cde31 = Bivector::from(Bivector_e31(self.e3*rhs.e1));
-        let aee12 = Bivector::from(Bivector_e12(self.e1*rhs.e2));
-        let cee32 = Bivector::from(Bivector_e23(self.e3*rhs.e2));
-        let afe13 = Bivector::from(Bivector_e31(self.e1*rhs.e3));
-        let bfe23 = Bivector::from(Bivector_e23(self.e2*rhs.e3));
+        let bde21 = Bivector::from(BivectorE12(self.e2*rhs.e1));
+        let cde31 = Bivector::from(BivectorE31(self.e3*rhs.e1));
+        let aee12 = Bivector::from(BivectorE12(self.e1*rhs.e2));
+        let cee32 = Bivector::from(BivectorE23(self.e3*rhs.e2));
+        let afe13 = Bivector::from(BivectorE31(self.e1*rhs.e3));
+        let bfe23 = Bivector::from(BivectorE23(self.e2*rhs.e3));
 
 
              b0        -   bde21     +   cde31 +

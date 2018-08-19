@@ -1,8 +1,6 @@
-use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector,
-};
+use super::super::Vector;
 
-use std::ops::{Add, BitXor, Mul, Neg};
+use std::ops::Mul;
 
 // scalar mul vector
 impl Mul<Vector> for f64 {

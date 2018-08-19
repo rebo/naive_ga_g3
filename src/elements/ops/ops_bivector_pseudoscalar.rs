@@ -1,8 +1,6 @@
-use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector,
-};
+use super::super::{Bivector, BivectorE12, BivectorE23, BivectorE31, Pseudoscalar, Vector};
 
-use std::ops::{Add, BitXor, Mul, Neg};
+use std::ops::Mul;
 
 impl Mul<Bivector> for Pseudoscalar {
     type Output = Vector;
@@ -20,10 +18,10 @@ impl Mul<Pseudoscalar> for Bivector {
     }
 }
 
-impl Mul<Bivector_e12> for Pseudoscalar {
+impl Mul<BivectorE12> for Pseudoscalar {
     type Output = Vector;
 
-    fn mul(self, rhs: Bivector_e12) -> Vector {
+    fn mul(self, rhs: BivectorE12) -> Vector {
         // ABe123e12
         // ABe12312
         // -ABe12321
@@ -38,10 +36,10 @@ impl Mul<Bivector_e12> for Pseudoscalar {
     }
 }
 
-impl Mul<Bivector_e23> for Pseudoscalar {
+impl Mul<BivectorE23> for Pseudoscalar {
     type Output = Vector;
 
-    fn mul(self, rhs: Bivector_e23) -> Vector {
+    fn mul(self, rhs: BivectorE23) -> Vector {
         // ABe123e23
         // ABe12323
         // -ABe12332
@@ -54,10 +52,10 @@ impl Mul<Bivector_e23> for Pseudoscalar {
     }
 }
 
-impl Mul<Bivector_e31> for Pseudoscalar {
+impl Mul<BivectorE31> for Pseudoscalar {
     type Output = Vector;
 
-    fn mul(self, rhs: Bivector_e31) -> Vector {
+    fn mul(self, rhs: BivectorE31) -> Vector {
         // ABe123e31
         // ABe12331
         // ABe121
@@ -70,7 +68,7 @@ impl Mul<Bivector_e31> for Pseudoscalar {
     }
 }
 
-impl Mul<Pseudoscalar> for Bivector_e12 {
+impl Mul<Pseudoscalar> for BivectorE12 {
     type Output = Vector;
 
     fn mul(self, rhs: Pseudoscalar) -> Vector {
@@ -86,7 +84,7 @@ impl Mul<Pseudoscalar> for Bivector_e12 {
     }
 }
 
-impl Mul<Pseudoscalar> for Bivector_e23 {
+impl Mul<Pseudoscalar> for BivectorE23 {
     type Output = Vector;
 
     fn mul(self, rhs: Pseudoscalar) -> Vector {
@@ -102,7 +100,7 @@ impl Mul<Pseudoscalar> for Bivector_e23 {
     }
 }
 
-impl Mul<Pseudoscalar> for Bivector_e31 {
+impl Mul<Pseudoscalar> for BivectorE31 {
     type Output = Vector;
 
     fn mul(self, rhs: Pseudoscalar) -> Vector {

@@ -46,7 +46,7 @@ fn main() {
         pseudoscalar: Pseudoscalar::zero(),
     };
 
-    let e12 = Bivector_e12(1.0);
+    let e12 = BivectorE12(1.0);
 
     //multivector multipliced by multivector
     let e1e2 = e1 * e2;
@@ -72,14 +72,11 @@ fn main() {
     println!("uv {:#?}", u * v); // should be 3.5 + 25.9 e12
 
     // checking a bivector * a bivector gives a scalar
-    println!(
-        "Hello, world! {:#?}",
-        Bivector_e12(3f64) * Bivector_e12(2f64)
-    );
+    println!("Hello, world! {:#?}", BivectorE12(3f64) * BivectorE12(2f64));
 
     // checking rotation of e1 and e2 under unit bivector
-    println!("e1 * I {:#?}", Vector::e1() * Bivector_e12::unit());
-    println!("I * e2 {:#?}", Bivector_e12::unit() * Vector::e2());
+    println!("e1 * I {:#?}", Vector::e1() * BivectorE12::unit());
+    println!("I * e2 {:#?}", BivectorE12::unit() * Vector::e2());
 
     // u and v for projection and rejection
     let u = Vector {

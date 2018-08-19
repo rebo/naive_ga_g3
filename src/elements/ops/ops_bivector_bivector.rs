@@ -1,8 +1,8 @@
 use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Pseudoscalar, Vector, Multivector
+    Bivector, BivectorE12, BivectorE23, BivectorE31,  Multivector
 };
 
-use std::ops::{Add, Mul, Neg, BitXor,Sub};
+use std::ops::{Add, Mul, Neg,Sub};
 
 
 impl Neg for Bivector {
@@ -17,27 +17,27 @@ impl Neg for Bivector {
     }
 }
 
-impl Neg for Bivector_e12 {
-    type Output = Bivector_e12;
+impl Neg for BivectorE12 {
+    type Output = BivectorE12;
 
-    fn neg(self) -> Bivector_e12 {
-        Bivector_e12(-self.0)
+    fn neg(self) -> BivectorE12 {
+        BivectorE12(-self.0)
     }
 }
 
-impl Neg for Bivector_e23 {
-    type Output = Bivector_e23;
+impl Neg for BivectorE23 {
+    type Output = BivectorE23;
 
-    fn neg(self) -> Bivector_e23 {
-       Bivector_e23(-self.0)
+    fn neg(self) -> BivectorE23 {
+       BivectorE23(-self.0)
     }
 }
 
-impl Neg for Bivector_e31 {
-    type Output = Bivector_e31;
+impl Neg for BivectorE31 {
+    type Output = BivectorE31;
 
-    fn neg(self) -> Bivector_e31 {
-        Bivector_e31(-self.0)
+    fn neg(self) -> BivectorE31 {
+        BivectorE31(-self.0)
     }
 }
 
@@ -58,27 +58,27 @@ impl Add for Bivector {
     }
 }
 
-impl Add for Bivector_e12 {
-    type Output = Bivector_e12;
+impl Add for BivectorE12 {
+    type Output = BivectorE12;
 
-    fn add(self, rhs: Bivector_e12) -> Bivector_e12 {
-        Bivector_e12(self.0 + rhs.0)
+    fn add(self, rhs: BivectorE12) -> BivectorE12 {
+        BivectorE12(self.0 + rhs.0)
     }
 }
 
-impl Add for Bivector_e23 {
-    type Output = Bivector_e23;
+impl Add for BivectorE23 {
+    type Output = BivectorE23;
 
-    fn add(self, rhs: Bivector_e23) -> Bivector_e23 {
-        Bivector_e23(self.0 + rhs.0)
+    fn add(self, rhs: BivectorE23) -> BivectorE23 {
+        BivectorE23(self.0 + rhs.0)
     }
 }
 
-impl Add for Bivector_e31 {
-    type Output = Bivector_e31;
+impl Add for BivectorE31 {
+    type Output = BivectorE31;
 
-    fn add(self, rhs: Bivector_e31) -> Bivector_e31 {
-        Bivector_e31(self.0 + rhs.0)
+    fn add(self, rhs: BivectorE31) -> BivectorE31 {
+        BivectorE31(self.0 + rhs.0)
     }
 }
 
@@ -113,85 +113,85 @@ impl Mul for Bivector {
     }
 }
 
-impl Mul for Bivector_e12  {
+impl Mul for BivectorE12  {
     type Output = f64;
 
-    fn mul(self, rhs:Bivector_e12) -> f64 {
+    fn mul(self, rhs:BivectorE12) -> f64 {
         -self.0*rhs.0
     }
 
 }
 
-impl Mul for Bivector_e23  {
+impl Mul for BivectorE23  {
     type Output = f64;
 
-    fn mul(self, rhs:Bivector_e23) -> f64 {
+    fn mul(self, rhs:BivectorE23) -> f64 {
         -self.0*rhs.0
     }
     
 }
 
-impl Mul for Bivector_e31  {
+impl Mul for BivectorE31  {
     type Output = f64;
 
-    fn mul(self, rhs:Bivector_e31) -> f64 {
+    fn mul(self, rhs:BivectorE31) -> f64 {
         -self.0*rhs.0
     }
 }
 
 // e12 mul e23
-impl Mul<Bivector_e12> for Bivector_e23  {
-    type Output = Bivector_e31;    
+impl Mul<BivectorE12> for BivectorE23  {
+    type Output = BivectorE31;    
 
-    fn mul(self, rhs:Bivector_e12) -> Bivector_e31 {
-        Bivector_e31(self.0*rhs.0)
+    fn mul(self, rhs:BivectorE12) -> BivectorE31 {
+        BivectorE31(self.0*rhs.0)
     }
 }
 
-impl Mul<Bivector_e23> for Bivector_e12  {
-    type Output = Bivector_e31;    
+impl Mul<BivectorE23> for BivectorE12  {
+    type Output = BivectorE31;    
 
-    fn mul(self, rhs:Bivector_e23) -> Bivector_e31 {
-        -1.0 * Bivector_e31(self.0*rhs.0)
+    fn mul(self, rhs:BivectorE23) -> BivectorE31 {
+        -1.0 * BivectorE31(self.0*rhs.0)
     }
 }
 
 
 // e31 mul e12
-impl Mul<Bivector_e31> for Bivector_e12  {
-    type Output = Bivector_e23;
+impl Mul<BivectorE31> for BivectorE12  {
+    type Output = BivectorE23;
 
-    fn mul(self, rhs:Bivector_e31) -> Bivector_e23 { 
-        Bivector_e23(self.0*rhs.0)
+    fn mul(self, rhs:BivectorE31) -> BivectorE23 { 
+        BivectorE23(self.0*rhs.0)
     }
 }
 
-impl Mul<Bivector_e12> for Bivector_e31  {
-    type Output = Bivector_e23;
+impl Mul<BivectorE12> for BivectorE31  {
+    type Output = BivectorE23;
 
-    fn mul(self, rhs:Bivector_e12) -> Bivector_e23 {
-        -1.0 * Bivector_e23(self.0*rhs.0)
+    fn mul(self, rhs:BivectorE12) -> BivectorE23 {
+        -1.0 * BivectorE23(self.0*rhs.0)
     }
 }
 // e23 mul e31
 
 
-impl Mul<Bivector_e23> for Bivector_e31  {
-    type Output = Bivector_e12;
+impl Mul<BivectorE23> for BivectorE31  {
+    type Output = BivectorE12;
 //     3123
 //    -1323
 //     1332
 //     12 
-    fn mul(self, rhs:Bivector_e23) -> Bivector_e12 {
-        Bivector_e12(self.0*rhs.0)
+    fn mul(self, rhs:BivectorE23) -> BivectorE12 {
+        BivectorE12(self.0*rhs.0)
     }
 }
 
-impl Mul<Bivector_e31> for Bivector_e23  {
-    type Output = Bivector_e12;
+impl Mul<BivectorE31> for BivectorE23  {
+    type Output = BivectorE12;
 
-    fn mul(self, rhs:Bivector_e31) -> Bivector_e12 { 
-        -1.0 * Bivector_e12(self.0*rhs.0)
+    fn mul(self, rhs:BivectorE31) -> BivectorE12 { 
+        -1.0 * BivectorE12(self.0*rhs.0)
     }
 }
 
@@ -207,7 +207,7 @@ impl Mul<Bivector_e31> for Bivector_e23  {
 
 
 // e12 mul e23
-impl Mul<Bivector> for Bivector_e12  {
+impl Mul<Bivector> for BivectorE12  {
     type Output = Multivector;    
 
     fn mul(self, rhs:Bivector) -> Multivector {
@@ -215,15 +215,15 @@ impl Mul<Bivector> for Bivector_e12  {
     }
 }
 
-impl Mul<Bivector_e12> for Bivector  {
+impl Mul<BivectorE12> for Bivector  {
     type Output = Multivector;    
 
-    fn mul(self, rhs:Bivector_e12) -> Multivector {
+    fn mul(self, rhs:BivectorE12) -> Multivector {
         self * Bivector::from(rhs)
     }
 }
 
-impl Mul<Bivector> for Bivector_e23  {
+impl Mul<Bivector> for BivectorE23  {
     type Output = Multivector;    
 
     fn mul(self, rhs:Bivector) -> Multivector {
@@ -231,15 +231,15 @@ impl Mul<Bivector> for Bivector_e23  {
     }
 }
 
-impl Mul<Bivector_e23> for Bivector  {
+impl Mul<BivectorE23> for Bivector  {
     type Output = Multivector;    
 
-    fn mul(self, rhs:Bivector_e23) -> Multivector {
+    fn mul(self, rhs:BivectorE23) -> Multivector {
         self * Bivector::from(rhs)
     }
 }
 
-impl Mul<Bivector> for Bivector_e31  {
+impl Mul<Bivector> for BivectorE31  {
     type Output = Multivector;    
 
     fn mul(self, rhs:Bivector) -> Multivector {
@@ -247,10 +247,10 @@ impl Mul<Bivector> for Bivector_e31  {
     }
 }
 
-impl Mul<Bivector_e31> for Bivector  {
+impl Mul<BivectorE31> for Bivector  {
     type Output = Multivector;    
 
-    fn mul(self, rhs:Bivector_e31) -> Multivector {
+    fn mul(self, rhs:BivectorE31) -> Multivector {
         self * Bivector::from(rhs)
     }
 }
@@ -287,84 +287,84 @@ impl Sub for Bivector {
     }
 }
 
-impl Sub for Bivector_e12  {
-    type Output = Bivector_e12;
+impl Sub for BivectorE12  {
+    type Output = BivectorE12;
 
-    fn sub(self, rhs:Bivector_e12) -> Bivector_e12 {
-        Bivector_e12( self.0 - rhs.0     )
+    fn sub(self, rhs:BivectorE12) -> BivectorE12 {
+        BivectorE12( self.0 - rhs.0     )
     }
 
 }
 
-impl Sub for Bivector_e23  {
-    type Output = Bivector_e23;
+impl Sub for BivectorE23  {
+    type Output = BivectorE23;
 
-    fn sub(self, rhs:Bivector_e23) -> Bivector_e23 {
-        Bivector_e23( self.0 - rhs.0 )
+    fn sub(self, rhs:BivectorE23) -> BivectorE23 {
+        BivectorE23( self.0 - rhs.0 )
     }
     
 }
 
-impl Sub for Bivector_e31  {
-    type Output = Bivector_e31;
+impl Sub for BivectorE31  {
+    type Output = BivectorE31;
 
-    fn sub(self, rhs:Bivector_e31) -> Bivector_e31 {
-        Bivector_e31( self.0 - rhs.0 )
+    fn sub(self, rhs:BivectorE31) -> BivectorE31 {
+        BivectorE31( self.0 - rhs.0 )
     }
 }
 
 // e12 sub e23
-impl Sub<Bivector_e12> for Bivector_e23  {
+impl Sub<BivectorE12> for BivectorE23  {
     type Output = Bivector;    
 
-    fn sub(self, rhs:Bivector_e12) -> Bivector {
+    fn sub(self, rhs:BivectorE12) -> Bivector {
         Bivector::from(self) - Bivector::from(rhs)
     }
 }
 
-impl Sub<Bivector_e23> for Bivector_e12  {
+impl Sub<BivectorE23> for BivectorE12  {
     type Output = Bivector;    
 
-    fn sub(self, rhs:Bivector_e23) -> Bivector {
+    fn sub(self, rhs:BivectorE23) -> Bivector {
         Bivector::from(self) - Bivector::from(rhs)
     }
 }
 
 
 // e31 sub e12
-impl Sub<Bivector_e31> for Bivector_e12  {
+impl Sub<BivectorE31> for BivectorE12  {
     type Output = Bivector;
 
-    fn sub(self, rhs:Bivector_e31) -> Bivector { 
+    fn sub(self, rhs:BivectorE31) -> Bivector { 
        Bivector::from(self) - Bivector::from(rhs)
     }
 }
 
-impl Sub<Bivector_e12> for Bivector_e31  {
+impl Sub<BivectorE12> for BivectorE31  {
     type Output = Bivector;
 
-    fn sub(self, rhs:Bivector_e12) -> Bivector  {
+    fn sub(self, rhs:BivectorE12) -> Bivector  {
         Bivector::from(self) - Bivector::from(rhs)
     }
 }
 // e23 sub e31
 
 
-impl Sub<Bivector_e23> for Bivector_e31  {
+impl Sub<BivectorE23> for BivectorE31  {
     type Output = Bivector;
 //     3123
 //    -1323
 //     1332
 //     12 
-    fn sub(self, rhs:Bivector_e23) -> Bivector {
+    fn sub(self, rhs:BivectorE23) -> Bivector {
         Bivector::from(self) - Bivector::from(rhs)
     }
 }
 
-impl Sub<Bivector_e31> for Bivector_e23  {
+impl Sub<BivectorE31> for BivectorE23  {
     type Output = Bivector;
 
-    fn sub(self, rhs:Bivector_e31) -> Bivector { 
+    fn sub(self, rhs:BivectorE31) -> Bivector { 
         Bivector::from(self) - Bivector::from(rhs)
     }
 }

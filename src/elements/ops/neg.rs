@@ -1,5 +1,5 @@
 use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector,
+    Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Pseudoscalar, Vector,
 };
 
 use std::ops::{Add, BitXor, Mul, Neg};
@@ -21,9 +21,9 @@ impl Neg for Bivector {
 
     fn neg(self) -> Self {
         Self {
-            e12: Bivector_e12(-self.e12.0),
-            e23: Bivector_e23(-self.e23.0),
-            e31: Bivector_e31(-self.e31.0),
+            e12: BivectorE12(-self.e12.0),
+            e23: BivectorE23(-self.e23.0),
+            e31: BivectorE31(-self.e31.0),
         }
     }
 }

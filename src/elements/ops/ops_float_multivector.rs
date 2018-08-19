@@ -1,8 +1,6 @@
-use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector,
-};
+use super::super::Multivector;
 
-use std::ops::{Add, BitXor, Mul, Neg, Sub};
+use std::ops::{Add, Sub};
 
 impl Add<f64> for Multivector {
     type Output = Multivector;

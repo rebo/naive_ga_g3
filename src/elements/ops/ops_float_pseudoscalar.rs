@@ -1,8 +1,6 @@
-use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector,
-};
+use super::super::Pseudoscalar;
 
-use std::ops::{Add, BitXor, Mul, Neg};
+use std::ops::Mul;
 
 // vector mul multivector
 

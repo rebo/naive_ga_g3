@@ -1,9 +1,9 @@
 
 use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector, Rotor
+    Multivector, Rotor
 };
 
-use std::ops::{Add, BitXor, Mul, Neg};
+use std::ops::{Add, Mul };
 
 impl Add for Multivector {
     type Output = Multivector;
@@ -34,7 +34,7 @@ impl Mul<Rotor> for Multivector {
 
     fn mul(self, rhs: Rotor) -> Multivector {
         let rotor = Multivector::from(rhs);
-        let vector = Multivector::from(self);
+        let vector = self ;
         vector * rotor
     }
 }
@@ -44,7 +44,7 @@ impl Mul<Multivector> for Rotor {
 
     fn mul(self, rhs: Multivector) -> Multivector {
        let rotor = Multivector::from(self);
-        let vector = Multivector::from(rhs);
+        let vector = rhs;
         rotor * vector
     }
 }

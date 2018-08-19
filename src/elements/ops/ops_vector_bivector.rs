@@ -1,10 +1,10 @@
 use super::super::{
-    Bivector, Bivector_e12, Bivector_e23, Bivector_e31, Multivector, Pseudoscalar, Vector,
+    Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Pseudoscalar, Vector,
 };
 
-use std::ops::{Add, BitXor, Mul, Neg};
+use std::ops::Mul;
 
-impl Mul<Vector> for Bivector_e12 {
+impl Mul<Vector> for BivectorE12 {
     type Output = Multivector;
 
     fn mul(self, rhs: Vector) -> Multivector {
@@ -21,7 +21,7 @@ impl Mul<Vector> for Bivector_e12 {
     }
 }
 
-impl Mul<Vector> for Bivector_e23 {
+impl Mul<Vector> for BivectorE23 {
     type Output = Multivector;
 
     fn mul(self, rhs: Vector) -> Multivector {
@@ -38,7 +38,7 @@ impl Mul<Vector> for Bivector_e23 {
     }
 }
 
-impl Mul<Vector> for Bivector_e31 {
+impl Mul<Vector> for BivectorE31 {
     type Output = Multivector;
 
     fn mul(self, rhs: Vector) -> Multivector {
@@ -57,10 +57,10 @@ impl Mul<Vector> for Bivector_e31 {
 
 /////////////////////////
 
-impl Mul<Bivector_e12> for Vector {
+impl Mul<BivectorE12> for Vector {
     type Output = Multivector;
 
-    fn mul(self, rhs: Bivector_e12) -> Multivector {
+    fn mul(self, rhs: BivectorE12) -> Multivector {
         Multivector {
             scalar: 0.0,
             vector: Vector {
@@ -74,10 +74,10 @@ impl Mul<Bivector_e12> for Vector {
     }
 }
 
-impl Mul<Bivector_e23> for Vector {
+impl Mul<BivectorE23> for Vector {
     type Output = Multivector;
 
-    fn mul(self, rhs: Bivector_e23) -> Multivector {
+    fn mul(self, rhs: BivectorE23) -> Multivector {
         Multivector {
             scalar: 0.0,
             vector: Vector {
@@ -91,10 +91,10 @@ impl Mul<Bivector_e23> for Vector {
     }
 }
 
-impl Mul<Bivector_e31> for Vector {
+impl Mul<BivectorE31> for Vector {
     type Output = Multivector;
 
-    fn mul(self, rhs: Bivector_e31) -> Multivector {
+    fn mul(self, rhs: BivectorE31) -> Multivector {
         Multivector {
             scalar: 0.0,
             vector: Vector {
