@@ -1,0 +1,10 @@
+cargo-features = ["edition"]
+
+[package]
+name = "complex_geo"
+edition = '2018'
+version = "0.1.0"
+authors = ["rebo <rebo@fakeemail.org>"]
+
+[dependencies]
+float-cmp = "0.4.0"
