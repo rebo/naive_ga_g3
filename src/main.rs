@@ -1,3 +1,4 @@
+#![allow(unknown_lints)]
 #![feature(rust_2018_preview, uniform_paths)]
 #![allow(many_single_char_names)]
 #![feature(tool_attributes)]
@@ -7,77 +8,6 @@ mod elements;
 use elements::*;
 
 fn main() {
-    // Creation of 2D vectors
-    let u = Vector {
-        e1: 1.0,
-        e2: 0.0,
-        e3: 0.0,
-    };
-    let v = Vector {
-        e1: 0.0,
-        e2: 1.0,
-        e3: 0.0,
-    };
-
-    // multivector multiplication
-    let multivector = u * v;
-    println!("uv = {:#?}", multivector);
-
-    // defining e1 and e2 as a mutlivector
-    let e1 = Multivector {
-        scalar: 0.0,
-        vector: Vector {
-            e1: 1.0,
-            e2: 0.0,
-            e3: 0.0,
-        },
-        bivector: Bivector::zero(),
-        pseudoscalar: Pseudoscalar::zero(),
-    };
-
-    let e2 = Multivector {
-        scalar: 0.0,
-        vector: Vector {
-            e1: 0.0,
-            e2: 1.0,
-            e3: 0.0,
-        },
-        bivector: Bivector::zero(),
-        pseudoscalar: Pseudoscalar::zero(),
-    };
-
-    let e12 = BivectorE12(1.0);
-
-    //multivector multipliced by multivector
-    let e1e2 = e1 * e2;
-
-    println!("e1e2 {:#?}", e1e2);
-    // bivector * mutlivector
-    println!("e12 * e1 {:#?}", e12 * e1);
-    // repeated bivector multiplication of e1 multivector
-    println!("e12 * e1 {:#?}", e1 * e12 * e12 * e12 * e12);
-
-    // more vector multiplication
-    let u = Vector {
-        e1: 3.5,
-        e2: -2.8,
-        e3: 0.0,
-    };
-    let v = Vector {
-        e1: 3.0,
-        e2: 5.0,
-        e3: 0.0,
-    };
-
-    println!("uv {:#?}", u * v); // should be 3.5 + 25.9 e12
-
-    // checking a bivector * a bivector gives a scalar
-    println!("Hello, world! {:#?}", BivectorE12(3f64) * BivectorE12(2f64));
-
-    // checking rotation of e1 and e2 under unit bivector
-    println!("e1 * I {:#?}", Vector::e1() * BivectorE12::unit());
-    println!("I * e2 {:#?}", BivectorE12::unit() * Vector::e2());
-
     // u and v for projection and rejection
     let u = Vector {
         e1: 1.0,
@@ -172,4 +102,99 @@ fn main() {
         "rotate with rotor {:#?}",
         t.apply_rotor(Rotor::new_from_u_v(u, v))
     );
+}
+
+#[cfg(test)]
+mod tests {
+    #![allow(unknown_lints)]
+    use super::*;
+    use float_cmp::ApproxEq;
+    #[test]
+    fn e1e1_multi() {
+        // defining e1 and e2 as a mutlivector
+        let e1 = Multivector {
+            scalar: 0.0,
+            vector: Vector {
+                e1: 1.0,
+                e2: 0.0,
+                e3: 0.0,
+            },
+            bivector: Bivector::zero(),
+            pseudoscalar: Pseudoscalar::zero(),
+        };
+
+        let e2 = Multivector {
+            scalar: 0.0,
+            vector: Vector {
+                e1: 0.0,
+                e2: 1.0,
+                e3: 0.0,
+            },
+            bivector: Bivector::zero(),
+            pseudoscalar: Pseudoscalar::zero(),
+        };
+        let m = e1 * e2;
+
+        assert_eq!(m, Multivector::from(Bivector::from(BivectorE12::unit())));
+    }
+
+    #[test]
+    fn uv_basis() {
+        let u = Vector {
+            e1: 0.0,
+            e2: 1.0,
+            e3: 0.0,
+        };
+        let v = Vector {
+            e1: 0.0,
+            e2: 0.0,
+            e3: 1.0,
+        };
+
+        assert_eq!(
+            u * v,
+            Multivector::from(Bivector::from(BivectorE23::unit()))
+        );
+    }
+
+    #[test]
+    fn uv_general() {
+        // more vector multiplication
+        let u = Vector {
+            e1: 3.5,
+            e2: -2.8,
+            e3: 0.0,
+        };
+        let v = Vector {
+            e1: 3.0,
+            e2: 5.0,
+            e3: 0.0,
+        };
+        let uv = u * v;
+
+        assert_eq!(
+            uv,
+            Multivector {
+                scalar: -3.5,
+                vector: Vector::zero(),
+                bivector: Bivector::from(BivectorE12(25.9)),
+                pseudoscalar: Pseudoscalar::zero(),
+            }
+        )
+    }
+
+    #[test]
+    fn bivector_basis_multi() {
+        let result = BivectorE12(3f64) * BivectorE12(2f64);
+
+        assert!(result.approx_eq(&-6.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn unit_m_e12() {
+        let e1e12 = Vector::e1() * BivectorE12::unit();
+
+        assert!(e1e12.vector.e1.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(e1e12.vector.e2.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
+    }
 }

@@ -1,6 +1,6 @@
 use float_cmp::ApproxEq;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Pseudoscalar(pub f64);
 
 impl Pseudoscalar {

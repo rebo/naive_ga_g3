@@ -2,7 +2,7 @@
 use super::multivector::{Multivector, Rotor};
 use float_cmp::ApproxEq;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vector {
     pub e1: f64,
     pub e2: f64,

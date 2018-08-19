@@ -48,8 +48,7 @@ impl BitXor<Vector> for Vector {
         let cee32 = Bivector::from(BivectorE23(self.e3*rhs.e2));
         let afe13 = Bivector::from(BivectorE31(self.e1*rhs.e3));
         let bfe23 = Bivector::from(BivectorE23(self.e2*rhs.e3));
-
-
+        
              b0        -   bde21     +   cde31 +
              aee12     +   b0        -   cee32 +
              -afe13    +   bfe23     +   b0

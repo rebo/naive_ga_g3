@@ -1,6 +1,22 @@
-use super::super::Vector;
+use super::super::{Multivector, Vector};
 
-use std::ops::Mul;
+use std::ops::{Add, Mul};
+
+impl Add<Vector> for f64 {
+    type Output = Multivector;
+
+    fn add(self, rhs: Vector) -> Multivector {
+        Multivector::from(self) + Multivector::from(rhs)
+    }
+}
+
+impl Add<f64> for Vector {
+    type Output = Multivector;
+
+    fn add(self, rhs: f64) -> Multivector {
+        Multivector::from(self) + Multivector::from(rhs)
+    }
+}
 
 // scalar mul vector
 impl Mul<Vector> for f64 {

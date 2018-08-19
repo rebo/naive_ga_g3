@@ -117,6 +117,7 @@ impl Mul for BivectorE12  {
     type Output = f64;
 
     fn mul(self, rhs:BivectorE12) -> f64 {
+        
         -self.0*rhs.0
     }
 

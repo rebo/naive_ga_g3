@@ -4,7 +4,7 @@ use super::vector::Vector;
 
 use float_cmp::ApproxEq;
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Multivector {
     pub scalar: f64,
     pub vector: Vector,

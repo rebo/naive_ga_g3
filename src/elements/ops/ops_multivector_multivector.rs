@@ -1,9 +1,6 @@
+use super::super::{Multivector, Rotor};
 
-use super::super::{
-    Multivector, Rotor
-};
-
-use std::ops::{Add, Mul };
+use std::ops::{Add, Mul};
 
 impl Add for Multivector {
     type Output = Multivector;
@@ -22,9 +19,10 @@ impl Mul for Multivector {
     type Output = Multivector;
     #[rustfmt::skip]
     fn mul(self, rhs: Multivector) -> Self {
-        self.scalar*rhs.scalar + self.bivector*rhs.scalar + self.pseudoscalar*rhs.scalar +
-        self.scalar*rhs.bivector + self.bivector*rhs.bivector + self.pseudoscalar*rhs.bivector +
-        self.scalar*rhs.pseudoscalar + self.bivector*rhs.pseudoscalar + self.pseudoscalar*rhs.pseudoscalar 
+        self.scalar * rhs.scalar + self.vector * rhs.scalar + self.bivector * rhs.scalar + self.pseudoscalar * rhs.scalar +
+        self.scalar * rhs.vector + self.vector * rhs.vector + self.bivector * rhs.vector + self.pseudoscalar * rhs.vector +
+        self.scalar * rhs.bivector + self.vector * rhs.bivector + self.bivector * rhs.bivector + self.pseudoscalar * rhs.bivector +
+        self.scalar * rhs.pseudoscalar + self.vector * rhs.pseudoscalar + self.bivector * rhs.pseudoscalar + self.pseudoscalar * rhs.pseudoscalar
     }
 }
 
@@ -34,7 +32,7 @@ impl Mul<Rotor> for Multivector {
 
     fn mul(self, rhs: Rotor) -> Multivector {
         let rotor = Multivector::from(rhs);
-        let vector = self ;
+        let vector = self;
         vector * rotor
     }
 }
@@ -43,7 +41,7 @@ impl Mul<Multivector> for Rotor {
     type Output = Multivector;
 
     fn mul(self, rhs: Multivector) -> Multivector {
-       let rotor = Multivector::from(self);
+        let rotor = Multivector::from(self);
         let vector = rhs;
         rotor * vector
     }

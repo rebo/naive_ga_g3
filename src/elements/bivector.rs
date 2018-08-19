@@ -1,6 +1,6 @@
 // pub struct Bivector(pub f64);
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct BivectorE12(pub f64);
 impl BivectorE12 {
     pub fn zero() -> Self {
@@ -11,7 +11,7 @@ impl BivectorE12 {
         BivectorE12(1.0)
     }
 }
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct BivectorE23(pub f64);
 impl BivectorE23 {
     pub fn zero() -> Self {
@@ -21,7 +21,7 @@ impl BivectorE23 {
         BivectorE23(1.0)
     }
 }
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct BivectorE31(pub f64);
 impl BivectorE31 {
     pub fn zero() -> Self {
@@ -33,7 +33,7 @@ impl BivectorE31 {
     }
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Bivector {
     pub e12: BivectorE12,
     pub e23: BivectorE23,
