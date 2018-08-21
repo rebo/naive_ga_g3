@@ -15,6 +15,8 @@ This is not fully tested so there is almost certainly errors in the mathematics 
 
 It is not set up to be used as a crate so experiments are just in main.rs at the moment.
 
+It uses Rust edition 2018 style, well cos it's the future!
+
 Example:
     // create vectors u and v, then project u onto v finding the reflection of u in v
 
