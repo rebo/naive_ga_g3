@@ -29,6 +29,9 @@ impl Multivector {
             pseudoscalar: Pseudoscalar::zero(),
         }
     }
+    pub fn is_unit_size(&self) -> bool {
+        self.mag2().approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2)
+    }
 
     pub fn magnitude(&self) -> f64 {
         let s = self.scalar;
@@ -41,8 +44,21 @@ impl Multivector {
 
         (s * s + ve1 * ve1 + ve2 * ve2 + be12 * be12 + be23 * be23 + be31 * be31 + p * p).powf(0.5)
     }
+
+    pub fn mag2(&self) -> f64 {
+        let s = self.scalar;
+        let ve1 = self.vector.e1;
+        let ve2 = self.vector.e2;
+        let be12 = self.bivector.e12.0;
+        let be23 = self.bivector.e23.0;
+        let be31 = self.bivector.e31.0;
+        let p = self.pseudoscalar.0;
+
+        s * s + ve1 * ve1 + ve2 * ve2 + be12 * be12 + be23 * be23 + be31 * be31 + p * p
+    }
 }
 
+// A Rotor is a multivector with only scalar and bivector part (and magnitute 1)
 #[derive(Debug, Clone, Copy)]
 pub struct Rotor {
     scalar: f64,
@@ -85,17 +101,9 @@ impl Rotor {
 
 impl std::convert::From<Multivector> for Rotor {
     fn from(m: Multivector) -> Self {
-        if !(m.magnitude().approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2)) {
-            panic!("Multivector has non unit size")
-        }
-
-        if !(m.vector.is_zero()) {
-            panic!("vector part is not zero")
-        }
-
-        if !(m.pseudoscalar.is_zero()) {
-            panic!("vector part is not zero")
-        }
+        assert!(m.is_unit_size(), "Multivector has non unit size");
+        assert!(m.vector.is_zero(), "vector part is not zero");
+        assert!(m.pseudoscalar.is_zero(), "scalar part is not zero");
 
         Rotor {
             scalar: m.scalar,
@@ -104,6 +112,7 @@ impl std::convert::From<Multivector> for Rotor {
     }
 }
 
+// conversions to a general multivector
 impl std::convert::From<Rotor> for Multivector {
     fn from(rotor: Rotor) -> Self {
         Self {

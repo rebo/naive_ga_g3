@@ -1,6 +1,10 @@
-#![allow(unknown_lints)]
+// 2018 is the future!
 #![feature(rust_2018_preview, uniform_paths)]
+// needed as clippy complains about unknown lints when tests are present
+#![allow(unknown_lints)]
+//lots of u's and v's
 #![allow(many_single_char_names)]
+// used for some skipping of rust fmt
 #![feature(tool_attributes)]
 
 mod elements;
@@ -111,7 +115,7 @@ fn main() {
 
     let bivector = v.normalize() * Pseudoscalar::unit();
     println!("Bivector  {:#?}", bivector);
-    let half_angle = std::f64::consts::PI;
+    let half_angle = std::f64::consts::PI / 8.0;
     let rotor = Rotor::from_exp(half_angle, bivector);
     println!("rotor{:#?}", rotor);
 

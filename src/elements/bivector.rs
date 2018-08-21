@@ -1,5 +1,38 @@
-// pub struct Bivector(pub f64);
+// general bivector blade with basis vectors e12, e23, and e31.
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Bivector {
+    pub e12: BivectorE12,
+    pub e23: BivectorE23,
+    pub e31: BivectorE31,
+}
+
+impl Bivector {
+    pub fn zero() -> Self {
+        Self {
+            e12: BivectorE12(0.0),
+            e23: BivectorE23(0.0),
+            e31: BivectorE31(0.0),
+        }
+    }
+
+    pub fn mag2(self) -> f64 {
+        self.e12.0 * self.e12.0 + self.e23.0 * self.e23.0 + self.e31.0 * self.e31.0
+    }
+
+    pub fn rev(self) -> Bivector {
+        // let k = 2;
+        // (-1.0f64).powi((k * (k - 1)) / 2) * self
+        -1.0 * self
+    }
+
+    // TODO : Need to update to 3d.
+    // pub fn dot_with_vector(self, rhs: Vector) -> Vector {
+    //     self * rhs
+    // }
+}
+
+// Basis bivectors e12, e23, and e31.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct BivectorE12(pub f64);
 impl BivectorE12 {
@@ -33,41 +66,7 @@ impl BivectorE31 {
     }
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub struct Bivector {
-    pub e12: BivectorE12,
-    pub e23: BivectorE23,
-    pub e31: BivectorE31,
-}
-
-impl Bivector {
-    // pub fn unit() -> Bivector {
-    //     Bivector(1.0)
-    // }
-
-    pub fn zero() -> Self {
-        Self {
-            e12: BivectorE12(0.0),
-            e23: BivectorE23(0.0),
-            e31: BivectorE31(0.0),
-        }
-    }
-
-    pub fn mag2(self) -> f64 {
-        self.e12.0 * self.e12.0 + self.e23.0 * self.e23.0 + self.e31.0 * self.e31.0
-    }
-
-    pub fn rev(self) -> Bivector {
-        // let k = 2;
-        // (-1.0f64).powi((k * (k - 1)) / 2) * self
-        -1.0 * self
-    }
-
-    // pub fn dot_with_vector(self, rhs: Vector) -> Vector {
-    //     self * rhs
-    // }
-}
-
+// Conversion methods from basis bivectors to full bivector
 impl std::convert::From<BivectorE12> for Bivector {
     fn from(be12: BivectorE12) -> Self {
         Bivector {
