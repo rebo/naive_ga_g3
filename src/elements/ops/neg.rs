@@ -2,7 +2,7 @@ use super::super::{
     Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Pseudoscalar, Vector,
 };
 
-use std::ops::{Add, BitXor, Mul, Neg};
+use std::ops::Neg;
 // Multiplication operations
 
 impl Neg for Vector {
@@ -12,6 +12,7 @@ impl Neg for Vector {
         Self {
             e1: -self.e1,
             e2: -self.e2,
+            e3: -self.e3,
         }
     }
 }
@@ -19,12 +20,36 @@ impl Neg for Vector {
 impl Neg for Bivector {
     type Output = Bivector;
 
-    fn neg(self) -> Self {
-        Self {
-            e12: BivectorE12(-self.e12.0),
-            e23: BivectorE23(-self.e23.0),
-            e31: BivectorE31(-self.e31.0),
+    fn neg(self) -> Bivector {
+        Bivector {
+            e12: -self.e12,
+            e23: -self.e23,
+            e31: -self.e31,
         }
+    }
+}
+
+impl Neg for BivectorE12 {
+    type Output = BivectorE12;
+
+    fn neg(self) -> BivectorE12 {
+        BivectorE12(-self.0)
+    }
+}
+
+impl Neg for BivectorE23 {
+    type Output = BivectorE23;
+
+    fn neg(self) -> BivectorE23 {
+        BivectorE23(-self.0)
+    }
+}
+
+impl Neg for BivectorE31 {
+    type Output = BivectorE31;
+
+    fn neg(self) -> BivectorE31 {
+        BivectorE31(-self.0)
     }
 }
 

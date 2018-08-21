@@ -37,3 +37,5 @@ mod ops_pseudoscalar_multivector;
 //
 
 mod ops_multivector_multivector;
+
+mod neg;
