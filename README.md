@@ -18,6 +18,7 @@ It is not set up to be used as a crate so experiments are just in main.rs at the
 It uses Rust edition 2018 style, well cos it's the future!
 
 Example:
+
     // create vectors u and v, then project u onto v finding the reflection of u in v
 
     let u = Vector { e1: 1.0, e2: 1.0, e3: 0.0,};
