@@ -19,44 +19,47 @@ It uses Rust edition 2018 style, well cos it's the future!
 
 Example:
 
-    // create vectors u and v, then project u onto v finding the reflection of u in v
+```rust
+// create vectors u and v, then project u onto v finding the reflection of u in v
 
-    let u = Vector { e1: 1.0, e2: 1.0, e3: 0.0,};
-    let v = Vector { e1: 10.0, e2: 1.0, e3: 0.0,};
+let u = Vector { e1: 1.0, e2: 1.0, e3: 0.0,};
+let v = Vector { e1: 10.0, e2: 1.0, e3: 0.0,};
 
-    // project u onto v
-    println!("u proj v {:#?}", u.proj(v));
+// project u onto v
+println!("u proj v {:#?}", u.proj(v));
 
-    // calculate the rejection of u onto v
-    println!("u rej v {:#?}", u.rej(v));
+// calculate the rejection of u onto v
+println!("u rej v {:#?}", u.rej(v));
 
-    // to reflect u in v we do u_proj - u_rej
-    println!("reflect u in v {:#?}", u.proj(v) - u.rej(v));
+// to reflect u in v we do u_proj - u_rej
+println!("reflect u in v {:#?}", u.proj(v) - u.rej(v));
 
-    // or use the built in reflect method (which does the same thing)
-    println!("reflect u in v {:#?}", u.reflect(v));
-
+// or use the built in reflect method (which does the same thing)
+println!("reflect u in v {:#?}", u.reflect(v));
+```
 Example with Rotors:
 
-    // use the dual of v to define a bivector (plane) which another vector is then another vector 
-    // is then rotated about by 45 degrees or π/4.
+```rust
+// use the dual of v to define a bivector (plane) which another vector is then another vector 
+// is then rotated about by 45 degrees or π/4.
 
-    // axis of rotation
-    let v = Vector { e1: 1.0, e2: 1.0, e3: 1.0,};
+// axis of rotation
+let v = Vector { e1: 1.0, e2: 1.0, e3: 1.0,};
 
-    // bivector formed from dual of v
-    let bivector = v.normalize() * Pseudoscalar::unit();
+// bivector formed from dual of v
+let bivector = v.normalize() * Pseudoscalar::unit();
 
-    /// half angle of rotation
-    let half_angle = std::f64::consts::PI/8.0;
+/// half angle of rotation
+let half_angle = std::f64::consts::PI/8.0;
 
-    // rotor created by use of e^(half-angle x B)
-    let rotor = Rotor::from_exp(half_angle, bivector);
+// rotor created by use of e^(half-angle x B)
+let rotor = Rotor::from_exp(half_angle, bivector);
 
-    // vector to rotate
-    let r = Vector { e1: 0.0, e2: 0.0, e3: 1.0,};
+// vector to rotate
+let r = Vector { e1: 0.0, e2: 0.0, e3: 1.0,};
 
-    let rotated_r = r.apply_rotor(rotor); 
-    // or could use rotated_r = rotor.rev() * r * rotor;
+let rotated_r = r.apply_rotor(rotor); 
+// or could use rotated_r = rotor.rev() * r * rotor;
 
-    println!("Rotated_r : {:#?} ", rotated_r);
+println!("Rotated_r : {:#?} ", rotated_r);
+``` 
