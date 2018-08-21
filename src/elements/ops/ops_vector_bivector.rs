@@ -42,12 +42,15 @@ impl Mul<Vector> for BivectorE31 {
     type Output = Multivector;
 
     fn mul(self, rhs: Vector) -> Multivector {
+        // d e31(a e1 + b e2 + ce3)
+        // (ad e1e31 + bd e312 + cd e31e3)
+        // (ad e3) + bd e123  -cd e1
         Multivector {
             scalar: 0.0,
             vector: Vector {
                 e1: -rhs.e3 * self.0,
                 e2: 0.0,
-                e3: rhs.e2 * self.0,
+                e3: rhs.e1 * self.0,
             },
             bivector: Bivector::zero(),
             pseudoscalar: Pseudoscalar(self.0 * rhs.e2),
@@ -95,12 +98,16 @@ impl Mul<BivectorE31> for Vector {
     type Output = Multivector;
 
     fn mul(self, rhs: BivectorE31) -> Multivector {
+        // (a e1 + b e2 + ce3) d e31
+        // (ad e1e31 + bd e231 + cd e3e31)
+        // (-ad e3) + bd e123 + cd e1
+
         Multivector {
             scalar: 0.0,
             vector: Vector {
                 e1: self.e3 * rhs.0,
                 e2: 0.0,
-                e3: -self.e2 * rhs.0,
+                e3: -self.e1 * rhs.0,
             },
             bivector: Bivector::zero(),
             pseudoscalar: Pseudoscalar(self.e2 * rhs.0),

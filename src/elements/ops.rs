@@ -1,3 +1,6 @@
+// stupid linespace formatting here to prevent rustfmt from working on this file
+// rustfmt.toml doesnt seem to be respected in VS Code.
+
 mod ops_float_vector;
 
 mod ops_float_bivector;

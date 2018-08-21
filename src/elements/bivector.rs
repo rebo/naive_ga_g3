@@ -53,6 +53,10 @@ impl Bivector {
         }
     }
 
+    pub fn mag2(self) -> f64 {
+        self.e12.0 * self.e12.0 + self.e23.0 * self.e23.0 + self.e31.0 * self.e31.0
+    }
+
     pub fn rev(self) -> Bivector {
         // let k = 2;
         // (-1.0f64).powi((k * (k - 1)) / 2) * self

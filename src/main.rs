@@ -87,9 +87,9 @@ fn main() {
         e3: 0.0,
     };
     let v = Vector {
-        e1: 1.0,
-        e2: 0.5,
-        e3: 0.0,
+        e1: 0.0,
+        e2: 0.0,
+        e3: 1.0,
     };
     let t = Vector {
         e1: 10.0,
@@ -102,6 +102,30 @@ fn main() {
         "rotate with rotor {:#?}",
         t.apply_rotor(Rotor::new_from_u_v(u, v))
     );
+
+    let v = Vector {
+        e1: 1.0,
+        e2: 1.0,
+        e3: 1.0,
+    };
+
+    let bivector = v.normalize() * Pseudoscalar::unit();
+    println!("Bivector  {:#?}", bivector);
+    let half_angle = std::f64::consts::PI;
+    let rotor = Rotor::from_exp(half_angle, bivector);
+    println!("rotor{:#?}", rotor);
+
+    println!("Half Angle: {:#?} ", rotor.half_angle());
+
+    let r = Vector {
+        e1: 0.0,
+        e2: 0.0,
+        e3: 1.0,
+    };
+
+    let rotated_r = r.apply_rotor(rotor);
+
+    println!("Rotated_r : {:#?} ", rotated_r);
 }
 
 #[cfg(test)]

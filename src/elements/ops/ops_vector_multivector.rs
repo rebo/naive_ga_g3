@@ -56,6 +56,7 @@ impl Mul<Vector> for Rotor {
     fn mul(self, rhs: Vector) -> Multivector {
         let rotor = Multivector::from(self);
         let vector = Multivector::from(rhs);
+
         rotor * vector
     }
 }

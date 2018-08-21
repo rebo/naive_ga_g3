@@ -4,6 +4,9 @@ use float_cmp::ApproxEq;
 pub struct Pseudoscalar(pub f64);
 
 impl Pseudoscalar {
+    pub fn unit() -> Self {
+        Pseudoscalar(1.0)
+    }
     pub fn zero() -> Self {
         Pseudoscalar(0.0)
     }

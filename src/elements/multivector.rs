@@ -68,6 +68,19 @@ impl Rotor {
             bivector: self.bivector.rev(),
         }
     }
+
+    pub fn from_exp(angle: f64, bivector: Bivector) -> Self {
+        assert!(
+            bivector.mag2().approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2),
+            "Bivector not unit size"
+        );
+
+        Rotor::from(angle.cos() + angle.sin() * bivector)
+    }
+
+    pub fn half_angle(self) -> f64 {
+        self.scalar.acos()
+    }
 }
 
 impl std::convert::From<Multivector> for Rotor {
