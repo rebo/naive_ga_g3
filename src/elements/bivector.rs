@@ -9,6 +9,14 @@ pub struct Bivector {
 }
 
 impl Bivector {
+    pub fn new(e12: f64, e23: f64, e31: f64) -> Bivector {
+        Bivector {
+            e12: BivectorE12(e12),
+            e23: BivectorE23(e23),
+            e31: BivectorE31(e31),
+        }
+    }
+
     pub fn zero() -> Self {
         Self {
             e12: BivectorE12(0.0),

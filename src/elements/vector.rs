@@ -28,6 +28,25 @@ impl OverloadedDot<Bivector, Vector> for Vector {
 }
 
 impl Vector {
+    pub fn new(e1: f64, e2: f64, e3: f64) -> Vector {
+        Vector { e1, e2, e3 }
+    }
+
+    pub fn angle(self, v: Vector) -> f64 {
+        let cos_theta = self.dot(v) / (self.mag() * v.mag());
+        cos_theta.acos()
+    }
+
+    pub fn slerp(self, v: Vector, s: f64) -> Vector {
+        // Note that this will only point self towards v, it will not shorten or lengthen self.
+        let theta = self.angle(v);
+
+        let a_s = ((1.0 - s) * theta).sin() / theta.sin();
+        let b_s = (s * theta).sin() / theta.sin();
+
+        a_s * self + b_s * v
+    }
+
     pub fn rev(self) -> Vector {
         // let k = 1;
         // (-1.0f64).powi((k * (k - 1)) / 2) * self
@@ -46,20 +65,25 @@ impl Vector {
             && self.e2.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
     }
 
+    pub fn mag(self) -> f64 {
+        self.mag2().powf(0.5)
+    }
+
     pub fn inv(self) -> Vector {
+        let mag2 = self.mag2();
         Self {
-            e1: self.e1 / self.abs_sq(),
-            e2: self.e2 / self.abs_sq(),
-            e3: self.e3 / self.abs_sq(),
+            e1: self.e1 / mag2,
+            e2: self.e2 / mag2,
+            e3: self.e3 / mag2,
         }
     }
 
-    pub fn abs_sq(self) -> f64 {
+    pub fn mag2(self) -> f64 {
         self.e1 * self.e1 + self.e2 * self.e2 + self.e3 * self.e3
     }
 
     pub fn normalize(self) -> Vector {
-        let v_size = (self.abs_sq()).powf(0.5);
+        let v_size = self.mag();
 
         Vector {
             e1: self.e1 / v_size,

@@ -214,6 +214,25 @@ mod tests {
     }
 
     #[test]
+    fn slerp() {
+        let u_initial = Vector::new(1.0, 0.0, 0.0);
+        let u_finish = Vector::new(0.0, 1.0, 0.0);
+
+        let u_s = u_initial.slerp(u_finish, 0.5);
+
+        let frac_1_sqrt_2 = std::f64::consts::FRAC_1_SQRT_2;
+        assert!(u_s.e1.approx_eq(&frac_1_sqrt_2, 2.0 * std::f64::EPSILON, 2));
+        assert!(u_s.e2.approx_eq(&frac_1_sqrt_2, 2.0 * std::f64::EPSILON, 2));
+        let u_s = u_initial.slerp(u_finish, 1.0);
+        assert!(u_s.e2.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
+        let u_s = u_initial.slerp(u_finish, 0.0);
+        assert!(u_s.e1.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
+    }
+    // fn slerp_two_vectors(){
+    //     let u =
+    // }
+
+    #[test]
     fn bivector_wedge_vector() {
         let u = Vector {
             e1: 1.0,
