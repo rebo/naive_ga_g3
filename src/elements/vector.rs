@@ -1,4 +1,5 @@
 // use super::bivector::Bivector;
+use super::bivector::Bivector;
 use super::multivector::{Multivector, Rotor};
 use float_cmp::ApproxEq;
 
@@ -9,11 +10,35 @@ pub struct Vector {
     pub e3: f64,
 }
 
+pub trait OverloadedDot<T, R> {
+    fn overloaded_dot(self, rhs: T) -> R;
+}
+
+impl OverloadedDot<Vector, f64> for Vector {
+    fn overloaded_dot(self, rhs: Vector) -> f64 {
+        self.e1 * rhs.e1 + self.e2 * rhs.e2 + self.e3 * rhs.e3
+    }
+}
+
+#[allow(eq_op)]
+impl OverloadedDot<Bivector, Vector> for Vector {
+    fn overloaded_dot(self, rhs: Bivector) -> Vector {
+        0.5 * (self * rhs - rhs * self).vector
+    }
+}
+
 impl Vector {
     pub fn rev(self) -> Vector {
         // let k = 1;
         // (-1.0f64).powi((k * (k - 1)) / 2) * self
         self
+    }
+
+    pub fn dot<T, R>(self, rhs: T) -> R
+    where
+        Self: OverloadedDot<T, R>,
+    {
+        self.overloaded_dot(rhs)
     }
 
     pub fn is_zero(self) -> bool {
@@ -68,9 +93,9 @@ impl Vector {
         }
     }
 
-    pub fn dot(self, rhs: Vector) -> f64 {
-        self.e1 * rhs.e1 + self.e2 * rhs.e2 + self.e3 * rhs.e3
-    }
+    // pub fn dot(self, rhs: Vector) -> f64 {
+    //     self.e1 * rhs.e1 + self.e2 * rhs.e2 + self.e3 * rhs.e3
+    // }
 
     // pub fn dot_with_bivector(self, rhs: Bivector) -> Vector {
     //     self * rhs

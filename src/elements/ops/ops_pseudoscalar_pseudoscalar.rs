@@ -1,12 +1,20 @@
 use super::super::Pseudoscalar;
 
-use std::ops::{Add, Mul};
+use std::ops::{Add, Mul, Sub};
 
 impl Add for Pseudoscalar {
     type Output = Pseudoscalar;
 
     fn add(self, rhs: Pseudoscalar) -> Pseudoscalar {
         Pseudoscalar(self.0 + rhs.0)
+    }
+}
+
+impl Sub for Pseudoscalar {
+    type Output = Pseudoscalar;
+
+    fn sub(self, rhs: Pseudoscalar) -> Pseudoscalar {
+        Pseudoscalar(self.0 - rhs.0)
     }
 }
 

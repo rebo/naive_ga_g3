@@ -1,4 +1,5 @@
 // general bivector blade with basis vectors e12, e23, and e31.
+use super::vector::Vector;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Bivector {
@@ -14,6 +15,12 @@ impl Bivector {
             e23: BivectorE23(0.0),
             e31: BivectorE31(0.0),
         }
+    }
+
+    pub fn dot(self, rhs: Vector) -> Vector {
+        // v dot B = - B dot v
+        // vector dot bivector is anti commutative
+        -1.0 * rhs.dot(self)
     }
 
     pub fn mag2(self) -> f64 {

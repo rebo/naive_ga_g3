@@ -1,5 +1,5 @@
 // 2018 is the future!
-#![feature(rust_2018_preview, uniform_paths)]
+#![feature(uniform_paths)]
 // needed as clippy complains about unknown lints when tests are present
 #![allow(unknown_lints)]
 //lots of u's and v's
@@ -137,6 +137,95 @@ mod tests {
     #![allow(unknown_lints)]
     use super::*;
     use float_cmp::ApproxEq;
+    #[test]
+    fn vector_dot_vector() {
+        let u = Vector {
+            e1: 1.0,
+            e2: 2.0,
+            e3: 4.0,
+        };
+
+        let v = Vector {
+            e1: 5.0,
+            e2: 3.0,
+            e3: 2.0,
+        };
+        let dot_product = u.dot(v);
+
+        assert!(dot_product.approx_eq(&19.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn vector_dot_bivector() {
+        // (1e1 + 2e2 + 4e3) dot e12
+        // 0.5 * ( (1e1 + 2e2 + 4e3) e12 - e12 (1e1 + 2e2 + 4e3) )
+        // 0.5 * ( 1e112 + 2e212 + 4e312 - (1e121 + 2e122 + 4 e123))
+        // 0.5 * ( 1e2 - 2e1 + 4 e123 + 1e2 - 2e1 - 4e123)
+        // 0.5 * (2e2 - 4 e1)
+        // 1e2 - 2e1
+        // as you can see it projects the vector into the E12 plane.
+
+        let u = Vector {
+            e1: 1.0,
+            e2: 2.0,
+            e3: 4.0,
+        };
+
+        let dot_product = u.dot(Bivector::from(BivectorE12::unit()));
+
+        assert!(dot_product.e1.approx_eq(&-2.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(dot_product.e2.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn vector_wedge_bivector() {
+        // (1e1 + 2e2 + 4e3) dot e12
+        // 0.5 * ( (1e1 + 2e2 + 4e3) e12 + e12 (1e1 + 2e2 + 4e3) )
+        // 0.5 * ( 1e112 + 2e212 + 4e312 + (1e121 + 2e122 + 4 e123))
+        // 0.5 * ( 1e2 - 2e1 + 4 e123 - 1e2 + 2e1 + 4e123)
+        // 0.5 * (8e1231)
+        // 4e123
+        // which should be a pseudoscalar
+
+        let u = Vector {
+            e1: 1.0,
+            e2: 2.0,
+            e3: 4.0,
+        };
+
+        let wedge_product = u ^ Bivector::from(BivectorE12::unit());
+
+        assert!(wedge_product.0.approx_eq(&4.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn bivector_dot_vector() {
+        let u = Vector {
+            e1: 1.0,
+            e2: 2.0,
+            e3: 4.0,
+        };
+
+        let bv = Bivector::from(BivectorE12::unit());
+
+        let dot_product = bv.dot(u);
+        assert!(dot_product.e1.approx_eq(&2.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(dot_product.e2.approx_eq(&-1.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn bivector_wedge_vector() {
+        let u = Vector {
+            e1: 1.0,
+            e2: 2.0,
+            e3: 4.0,
+        };
+
+        let bv = Bivector::from(BivectorE12::unit());
+        let wedge_product = bv ^ u;
+        assert!(wedge_product.0.approx_eq(&4.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
     #[test]
     fn e1e1_multi() {
         // defining e1 and e2 as a mutlivector

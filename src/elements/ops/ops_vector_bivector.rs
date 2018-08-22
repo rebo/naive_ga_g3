@@ -2,7 +2,7 @@ use super::super::{
     Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Pseudoscalar, Vector,
 };
 
-use std::ops::Mul;
+use std::ops::{BitXor, Mul};
 
 impl Mul<Vector> for BivectorE12 {
     type Output = Multivector;
@@ -120,6 +120,21 @@ impl Mul<Bivector> for Vector {
 
     fn mul(self, rhs: Bivector) -> Multivector {
         self * rhs.e12 + self * rhs.e23 + self * rhs.e31
+    }
+}
+
+impl BitXor<Bivector> for Vector {
+    type Output = Pseudoscalar;
+    fn bitxor(self, rhs: Bivector) -> Pseudoscalar {
+        0.5 * (self * rhs + rhs * self).pseudoscalar
+    }
+}
+
+impl BitXor<Vector> for Bivector {
+    type Output = Pseudoscalar;
+    fn bitxor(self, rhs: Vector) -> Pseudoscalar {
+        // bivector wedge vector is commutative
+        rhs ^ self
     }
 }
 

@@ -1,6 +1,6 @@
 use super::super::{Multivector, Rotor};
 
-use std::ops::{Add, Mul};
+use std::ops::{Add, Mul, Sub};
 
 impl Add for Multivector {
     type Output = Multivector;
@@ -11,6 +11,19 @@ impl Add for Multivector {
             vector: self.vector + rhs.vector,
             bivector: self.bivector + rhs.bivector,
             pseudoscalar: self.pseudoscalar + rhs.pseudoscalar,
+        }
+    }
+}
+
+impl Sub for Multivector {
+    type Output = Multivector;
+
+    fn sub(self, rhs: Multivector) -> Self {
+        Multivector {
+            scalar: self.scalar - rhs.scalar,
+            vector: self.vector - rhs.vector,
+            bivector: self.bivector - rhs.bivector,
+            pseudoscalar: self.pseudoscalar - rhs.pseudoscalar,
         }
     }
 }
