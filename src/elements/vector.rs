@@ -1,4 +1,3 @@
-// use super::bivector::Bivector;
 use super::bivector::Bivector;
 use super::multivector::{Multivector, Rotor};
 use float_cmp::ApproxEq;
@@ -37,8 +36,14 @@ impl Vector {
         cos_theta.acos()
     }
 
+    pub fn lerp(self, v: Vector, s: f64) -> Vector {
+        (1.0 - s) * self + s * v
+    }
+
     pub fn slerp(self, v: Vector, s: f64) -> Vector {
         // Note that this will only point self towards v, it will not shorten or lengthen self.
+        // s should be  between 0.0 and 1.0.
+
         let theta = self.angle(v);
 
         let a_s = ((1.0 - s) * theta).sin() / theta.sin();
@@ -116,14 +121,6 @@ impl Vector {
             e3: 0.0,
         }
     }
-
-    // pub fn dot(self, rhs: Vector) -> f64 {
-    //     self.e1 * rhs.e1 + self.e2 * rhs.e2 + self.e3 * rhs.e3
-    // }
-
-    // pub fn dot_with_bivector(self, rhs: Bivector) -> Vector {
-    //     self * rhs
-    // }
 
     pub fn e1() -> Self {
         Self {

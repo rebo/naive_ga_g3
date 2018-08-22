@@ -333,4 +333,15 @@ mod tests {
         assert!(e1e12.vector.e1.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
         assert!(e1e12.vector.e2.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
     }
+
+    #[test]
+    fn lerp_test() {
+        let u = Vector::new(1.0, 0.0, 0.0);
+        let v = Vector::new(0.0, 5.0, 0.0);
+
+        let u_s = u.lerp(v, 0.5);
+
+        assert!(u_s.e1.approx_eq(&0.5, 2.0 * std::f64::EPSILON, 2));
+        assert!(u_s.e2.approx_eq(&2.5, 2.0 * std::f64::EPSILON, 2));
+    }
 }
