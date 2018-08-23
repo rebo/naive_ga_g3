@@ -344,4 +344,55 @@ mod tests {
         assert!(u_s.e1.approx_eq(&0.5, 2.0 * std::f64::EPSILON, 2));
         assert!(u_s.e2.approx_eq(&2.5, 2.0 * std::f64::EPSILON, 2));
     }
+
+    #[test]
+    fn dist_to_plane() {
+        let u = Vector::e1();
+        let v = Vector::e2();
+        let e12 = BivectorE12::unit();
+
+        let origin = Vector::new(5.0, 0.0, 0.0);
+        let eastish = Vector::new(1.0, 0.0, 0.0);
+
+        let plane = Plane::new(origin, Bivector::new(1.0, 0.2, 0.0), eastish);
+
+        println!(
+            "Distance to plane {:#?}",
+            plane.dist_to_point(Vector::new(1.0, 2.0, 2.0))
+        );
+
+        println!(
+            "Vector to plane {:#?}",
+            plane.vector_to_point(Vector::new(1.0, 2.0, 2.0))
+        );
+    }
+
+    #[test]
+    fn line_plane_intersection() {
+        let line = Line {
+            origin: Vector::new(0.0, 10.0, 0.0),
+            direction: Vector::new(1.0, 2.0, 1.0),
+        };
+
+        let plane_origin = Vector::new(0.0, -2.0, 0.0);
+        let eastish = Vector::new(1.0, 0.0, 0.0);
+        let plane = Plane::new(plane_origin, Bivector::from(BivectorE31::unit()), eastish);
+
+        let s = line.intersection_with_plane_parameter(plane);
+        assert!(s.unwrap().approx_eq(&-6.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn line_plane_intersection_param_is_zero() {
+        let line = Line {
+            origin: Vector::new(0.0, 10.0, 0.0),
+            direction: Vector::new(1.0, 2.0, 1.0),
+        };
+
+        let plane_origin = Vector::new(0.0, 10.0, 0.0);
+        let eastish = Vector::new(1.0, 0.0, 0.0);
+        let plane = Plane::new(plane_origin, Bivector::from(BivectorE31::unit()), eastish);
+        let s = line.intersection_with_plane_parameter(plane);
+        assert!(s.unwrap().approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
+    }
 }

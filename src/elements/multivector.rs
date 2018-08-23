@@ -85,13 +85,13 @@ impl Rotor {
         }
     }
 
-    pub fn from_exp(angle: f64, bivector: Bivector) -> Self {
+    pub fn from_exp(half_angle: f64, bivector: Bivector) -> Self {
         assert!(
             bivector.mag2().approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2),
             "Bivector not unit size"
         );
 
-        Rotor::from(angle.cos() + angle.sin() * bivector)
+        Rotor::from(half_angle.cos() + half_angle.sin() * bivector)
     }
 
     pub fn half_angle(self) -> f64 {
