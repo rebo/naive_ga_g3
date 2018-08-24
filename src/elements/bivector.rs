@@ -1,6 +1,6 @@
 // general bivector blade with basis vectors e12, e23, and e31.
-use crate::elements::Vector;
-
+use crate::elements::{Multivector, Rotor, Vector};
+use float_cmp::ApproxEq;
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Bivector {
     pub e12: BivectorE12,
@@ -17,16 +17,22 @@ impl Bivector {
         }
     }
 
+    pub fn is_zero(self) -> bool {
+        self.e12.0.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
+            && self.e23.0.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
+            && self.e31.0.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
+    }
+
     pub fn e12() -> Self {
-        Bivector::from(BivectorE12::unit())
+        BivectorE12::unit().into()
     }
 
     pub fn e23() -> Self {
-        Bivector::from(BivectorE23::unit())
+        BivectorE23::unit().into()
     }
 
     pub fn e31() -> Self {
-        Bivector::from(BivectorE31::unit())
+        BivectorE31::unit().into()
     }
 
     pub fn reflect_in_plane_with_normal(self, n: Vector) -> Self {
@@ -73,6 +79,10 @@ impl Bivector {
         // let k = 2;
         // (-1.0f64).powi((k * (k - 1)) / 2) * self
         -1.0 * self
+    }
+
+    pub fn apply_rotor(self, rotor: Rotor) -> Self {
+        (rotor.rev() * self * rotor).into()
     }
 
     // TODO : Need to update to 3d.
@@ -143,5 +153,12 @@ impl std::convert::From<BivectorE31> for Bivector {
             e23: BivectorE23::zero(),
             e31: be31,
         }
+    }
+}
+
+impl std::convert::From<Multivector> for Bivector {
+    fn from(mv: Multivector) -> Self {
+        assert!(mv.is_bivector());
+        mv.bivector
     }
 }

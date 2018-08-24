@@ -26,6 +26,27 @@ impl Multivector {
             pseudoscalar: Pseudoscalar::zero(),
         }
     }
+
+    pub fn is_bivector(self) -> bool {
+        self.scalar_is_zero() && self.vector_is_zero() && self.pseudoscalar_is_zero()
+    }
+
+    pub fn scalar_is_zero(self) -> bool {
+        self.scalar.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
+    }
+
+    pub fn vector_is_zero(self) -> bool {
+        self.vector.is_zero()
+    }
+
+    pub fn bivector_is_zero(self) -> bool {
+        self.bivector.is_zero()
+    }
+
+    pub fn pseudoscalar_is_zero(self) -> bool {
+        self.pseudoscalar.is_zero()
+    }
+
     pub fn is_unit_size(&self) -> bool {
         self.mag2().approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2)
     }

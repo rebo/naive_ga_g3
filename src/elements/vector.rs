@@ -64,11 +64,6 @@ impl Vector {
         self.overloaded_dot(rhs)
     }
 
-    pub fn is_zero(self) -> bool {
-        self.e1.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
-            && self.e2.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
-    }
-
     pub fn mag(self) -> f64 {
         self.mag2().powf(0.5)
     }
@@ -116,8 +111,8 @@ impl Vector {
         -(n * self * n).vector
     }
 
-    pub fn apply_rotor(self, rotor: Rotor) -> Vector {
-        Vector::from(rotor.rev() * self * rotor)
+    pub fn apply_rotor(self, rotor: Rotor) -> Self {
+        (rotor.rev() * self * rotor).into()
     }
 
     pub fn zero() -> Vector {
@@ -126,6 +121,12 @@ impl Vector {
             e2: 0.0,
             e3: 0.0,
         }
+    }
+
+    pub fn is_zero(self) -> bool {
+        self.e1.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
+            && self.e2.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
+            && self.e3.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2)
     }
 
     pub fn e1() -> Self {

@@ -40,23 +40,3 @@ impl Mul<Vector> for Multivector {
     }
 }
 // multivector mul multivector
-impl Mul<Rotor> for Vector {
-    type Output = Multivector;
-
-    fn mul(self, rhs: Rotor) -> Multivector {
-        let rotor = Multivector::from(rhs);
-        let vector = Multivector::from(self);
-        vector * rotor
-    }
-}
-
-impl Mul<Vector> for Rotor {
-    type Output = Multivector;
-
-    fn mul(self, rhs: Vector) -> Multivector {
-        let rotor = Multivector::from(self);
-        let vector = Multivector::from(rhs);
-
-        rotor * vector
-    }
-}
