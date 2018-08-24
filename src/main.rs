@@ -444,4 +444,47 @@ mod tests {
         let s = line.intersection_with_plane_parameter(plane);
         assert!(s.unwrap().approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
     }
+
+    #[test]
+    fn rotor_direction() {
+        let r1 = Rotor::from_exp(std::f64::consts::FRAC_PI_4, Bivector::e12());
+        let r2 = Rotor::from_exp(std::f64::consts::PI, Bivector::e12());
+
+        let r = r2 * r1;
+
+        // need to check that r == -r1
+        assert!(
+            r.scalar()
+                .approx_eq(&-r1.scalar(), 2.0 * std::f64::EPSILON, 2)
+        );
+
+        assert!(
+            r.bivector()
+                .e12
+                .0
+                .approx_eq(&-r1.bivector().e12.0, 2.0 * std::f64::EPSILON, 2)
+        );
+    }
+
+    #[test]
+    fn rotor_x_rotor() {
+        let r1 = Rotor::from_exp(std::f64::consts::FRAC_PI_2, Bivector::e12());
+        let r2 = Rotor::from_exp(std::f64::consts::FRAC_PI_4, Bivector::e12());
+        let r3 = Rotor::from_exp(std::f64::consts::FRAC_PI_4 * 3.0, Bivector::e12());
+
+        let r = r2 * r1;
+
+        // need to check that r == -r1
+        assert!(
+            r.scalar()
+                .approx_eq(&r3.scalar(), 2.0 * std::f64::EPSILON, 2)
+        );
+
+        assert!(
+            r.bivector()
+                .e12
+                .0
+                .approx_eq(&r3.bivector().e12.0, 2.0 * std::f64::EPSILON, 2)
+        );
+    }
 }

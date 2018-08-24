@@ -43,3 +43,13 @@ impl Mul<Bivector> for Rotor {
         rotor * bivector
     }
 }
+
+impl Mul for Rotor {
+    type Output = Self;
+
+    #[rustfmt::skip]
+    fn mul(self, rhs: Self) -> Self {
+        (self.scalar() * rhs.scalar() + self.scalar()*rhs.bivector() + 
+        self.bivector() * rhs.scalar() + self.bivector()* rhs.bivector()).into()
+    }
+}
