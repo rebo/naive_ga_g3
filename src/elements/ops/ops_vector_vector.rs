@@ -1,6 +1,6 @@
 #![allow(suspicious_arithmetic_impl)]
 
-use super::super::{Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Vector};
+use crate::elements::{Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Vector};
 
 use std::ops::{Add, BitXor, Mul, Sub};
 

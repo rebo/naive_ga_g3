@@ -1,4 +1,4 @@
-use super::super::{Bivector, BivectorE12, BivectorE23, BivectorE31, Pseudoscalar, Vector};
+use crate::elements::{Bivector, BivectorE12, BivectorE23, BivectorE31, Pseudoscalar, Vector};
 
 use std::ops::Mul;
 

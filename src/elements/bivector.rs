@@ -1,5 +1,5 @@
 // general bivector blade with basis vectors e12, e23, and e31.
-use super::vector::Vector;
+use crate::elements::Vector;
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Bivector {
@@ -14,6 +14,32 @@ impl Bivector {
             e12: BivectorE12(e12),
             e23: BivectorE23(e23),
             e31: BivectorE31(e31),
+        }
+    }
+
+    pub fn e12() -> Self {
+        Bivector::from(BivectorE12::unit())
+    }
+
+    pub fn e23() -> Self {
+        Bivector::from(BivectorE23::unit())
+    }
+
+    pub fn e31() -> Self {
+        Bivector::from(BivectorE31::unit())
+    }
+
+    pub fn reflect_in_plane_with_normal(self, n: Vector) -> Self {
+        // ensure n is normalized
+        let n = n.normalize();
+        (n * self * n).bivector
+    }
+
+    pub fn normalize(self) -> Self {
+        Self {
+            e12: self.e12 * (1.0 / self.mag()),
+            e23: self.e23 * (1.0 / self.mag()),
+            e31: self.e31 * (1.0 / self.mag()),
         }
     }
 

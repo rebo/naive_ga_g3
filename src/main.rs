@@ -171,11 +171,35 @@ mod tests {
     }
 
     #[test]
+    fn reflect_bivector_in_plane_with_normal_in_plane() {
+        let bv = Bivector::e12();
+        let n = Vector::new(-1.0, 1.0, 0.0);
+
+        let bv_dash = bv.reflect_in_plane_with_normal(n);
+        // print!("u_dash {:#?}", bv_dash);
+        assert!(bv_dash.e12.0.approx_eq(&-1.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(bv_dash.e23.0.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(bv_dash.e31.0.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn reflect_bivector_in_plane_with_normal() {
+        let bv = Bivector::e12() + Bivector::e31();
+        let n = Vector::new(0.0, 1.0, 0.0);
+
+        let bv_dash = bv.reflect_in_plane_with_normal(n);
+        // print!("u_dash {:#?}", bv_dash);
+        assert!(bv_dash.e12.0.approx_eq(&-1.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(bv_dash.e23.0.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(bv_dash.e31.0.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
     fn reflect_in_plane_with_normal() {
         let u = Vector::new(1.0, 0.0, 0.0);
-        let v = Vector::new(-1.0, 1.0, 0.0);
+        let n = Vector::new(-1.0, 1.0, 0.0);
 
-        let u_dash = u.reflect_in_plane_with_normal(v);
+        let u_dash = u.reflect_in_plane_with_normal(n);
         print!("u_dash {:#?}", u_dash);
         assert!(u_dash.e1.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
         assert!(u_dash.e2.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
@@ -373,14 +397,13 @@ mod tests {
 
     #[test]
     fn dist_to_plane() {
-        let u = Vector::e1();
-        let v = Vector::e2();
-        let e12 = BivectorE12::unit();
-
         let origin = Vector::new(5.0, 0.0, 0.0);
         let eastish = Vector::new(1.0, 0.0, 0.0);
 
-        let plane = Plane::new(origin, Bivector::new(1.0, 0.2, 0.0), eastish);
+        let plane = Plane::new(origin, Bivector::e12(), eastish);
+        let dist = plane.dist_to_point(Vector::new(2.0, 7.0, 2.0));
+
+        assert!(dist.approx_eq(&2.0, 2.0 * std::f64::EPSILON, 2));
 
         println!(
             "Distance to plane {:#?}",

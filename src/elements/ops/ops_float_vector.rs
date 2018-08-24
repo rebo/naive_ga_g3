@@ -1,4 +1,4 @@
-use super::super::{Multivector, Vector};
+use crate::elements::{Multivector, Vector};
 
 use std::ops::{Add, Mul};
 

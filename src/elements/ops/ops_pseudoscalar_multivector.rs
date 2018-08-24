@@ -1,4 +1,4 @@
-use super::super::{Multivector, Pseudoscalar};
+use crate::elements::{Multivector, Pseudoscalar};
 
 use std::ops::Add;
 

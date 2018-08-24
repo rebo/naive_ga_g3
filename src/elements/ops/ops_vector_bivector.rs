@@ -1,4 +1,4 @@
-use super::super::{
+use crate::elements::{
     Bivector, BivectorE12, BivectorE23, BivectorE31, Multivector, Pseudoscalar, Vector,
 };
 

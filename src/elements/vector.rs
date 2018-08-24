@@ -1,5 +1,4 @@
-use super::bivector::Bivector;
-use super::multivector::{Multivector, Rotor};
+use crate::elements::{Bivector, Multivector, Rotor};
 use float_cmp::ApproxEq;
 
 #[derive(Clone, Copy, Debug, PartialEq)]

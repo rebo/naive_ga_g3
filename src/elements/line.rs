@@ -1,6 +1,4 @@
-use super::bivector::Bivector;
-use super::multivector::Rotor;
-use super::vector::Vector;
+use crate::elements::{Bivector, Rotor, Vector};
 use float_cmp::ApproxEq;
 
 #[derive(Copy, Clone, Debug)]
@@ -52,7 +50,7 @@ impl Plane {
         // this points 'north' and is in the plane of the bivector
         let north = eastish.dot(bivector);
 
-        let rotor = Rotor::from_exp(-std::f64::consts::PI / 4.0, bivector);
+        let rotor = Rotor::from_exp(-std::f64::consts::PI / 4.0, bivector.normalize());
 
         let east = north.apply_rotor(rotor);
 

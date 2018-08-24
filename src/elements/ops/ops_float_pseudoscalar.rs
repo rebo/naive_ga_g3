@@ -1,4 +1,4 @@
-use super::super::Pseudoscalar;
+use crate::elements::Pseudoscalar;
 
 use std::ops::Mul;
 
