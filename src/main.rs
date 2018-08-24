@@ -101,7 +101,10 @@ fn main() {
         e3: 0.0,
     };
 
-    println!("reflect in v and then w {:#?}", t.reflect(u).reflect(v));
+    println!(
+        "reflect in v and then w {:#?}",
+        t.reflect_in_vector(u).reflect_in_vector(v)
+    );
     println!(
         "rotate with rotor {:#?}",
         t.apply_rotor(Rotor::new_from_u_v(u, v))
@@ -153,6 +156,29 @@ mod tests {
         let dot_product = u.dot(v);
 
         assert!(dot_product.approx_eq(&19.0, 2.0 * std::f64::EPSILON, 2));
+    }
+
+    #[test]
+    fn reflect_in_vector() {
+        let u = Vector::new(1.0, 0.0, 0.0);
+        let v = Vector::new(1.0, 1.0, 0.0);
+
+        let u_dash = u.reflect_in_vector(v);
+
+        assert!(u_dash.e1.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(u_dash.e2.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
+        print!("u_dash {:#?}", u_dash);
+    }
+
+    #[test]
+    fn reflect_in_plane_with_normal() {
+        let u = Vector::new(1.0, 0.0, 0.0);
+        let v = Vector::new(-1.0, 1.0, 0.0);
+
+        let u_dash = u.reflect_in_plane_with_normal(v);
+        print!("u_dash {:#?}", u_dash);
+        assert!(u_dash.e1.approx_eq(&0.0, 2.0 * std::f64::EPSILON, 2));
+        assert!(u_dash.e2.approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2));
     }
 
     #[test]

@@ -106,8 +106,15 @@ impl Vector {
         ((self ^ rhs) * rhs.inv()).vector
     }
 
-    pub fn reflect(self, v: Vector) -> Vector {
+    pub fn reflect_in_vector(self, v: Vector) -> Vector {
         self.proj(v) - self.rej(v)
+    }
+
+    pub fn reflect_in_plane_with_normal(self, n: Vector) -> Vector {
+        // ensure n is normalized
+        let n = n.normalize();
+
+        -(n * self * n).vector
     }
 
     pub fn apply_rotor(self, rotor: Rotor) -> Vector {
