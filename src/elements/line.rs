@@ -8,6 +8,10 @@ pub struct Line {
 }
 
 impl Line {
+    pub fn new(origin: Vector, direction: Vector) -> Self {
+        Self { origin, direction }
+    }
+
     pub fn point_on_line(self, s: f64) -> Vector {
         self.origin + s * self.direction
     }

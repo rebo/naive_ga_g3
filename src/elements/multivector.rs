@@ -48,7 +48,7 @@ impl Multivector {
     }
 
     pub fn is_unit_size(&self) -> bool {
-        self.mag2().approx_eq(&1.0, 2.0 * std::f64::EPSILON, 2)
+        self.mag2().approx_eq(&1.0, 10.0 * std::f64::EPSILON, 2)
     }
 
     pub fn magnitude(&self) -> f64 {

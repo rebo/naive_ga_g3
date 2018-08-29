@@ -112,7 +112,7 @@ impl Vector {
     }
 
     pub fn apply_rotor(self, rotor: Rotor) -> Self {
-        (rotor.rev() * self * rotor).into()
+        (rotor * self * rotor.rev()).into()
     }
 
     pub fn zero() -> Vector {

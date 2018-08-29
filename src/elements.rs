@@ -1,11 +1,10 @@
 mod bivector;
 mod line;
 mod multivector;
+mod ops;
 mod pseudoscalar;
 mod rotor;
 mod vector;
-
-mod ops;
 
 // exporting the following structs and elements.
 pub use self::bivector::{Bivector, BivectorE12, BivectorE23, BivectorE31};

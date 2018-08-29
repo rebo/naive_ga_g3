@@ -22,7 +22,7 @@ impl Rotor {
     }
 
     pub fn new_from_u_v(u: Vector, v: Vector) -> Rotor {
-        (u.normalize() * v.normalize()).into()
+        (v.normalize() * u.normalize()).into()
     }
 
     pub fn rev(self) -> Rotor {
@@ -38,7 +38,7 @@ impl Rotor {
             "Bivector not unit size"
         );
 
-        (half_angle.cos() + half_angle.sin() * bivector).into()
+        (half_angle.cos() - half_angle.sin() * bivector).into()
     }
 
     pub fn half_angle(self) -> f64 {
@@ -48,6 +48,7 @@ impl Rotor {
 
 impl std::convert::From<Multivector> for Rotor {
     fn from(m: Multivector) -> Self {
+        println!("{:#?}", m);
         assert!(m.is_unit_size(), "Multivector has non unit size");
         assert!(m.vector.is_zero(), "Vector part not zero");
         assert!(m.pseudoscalar.is_zero(), "Pseudoscalar part not zero");
