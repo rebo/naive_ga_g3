@@ -5,7 +5,6 @@
 //lots of u's and v's
 #![allow(many_single_char_names)]
 // used for some skipping of rust fmt
-#![feature(tool_attributes)]
 
 mod elements;
 pub use elements::*;

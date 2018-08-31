@@ -9,3 +9,5 @@ description = "Naive implmentation of the Geometric Algebra for G3"
 
 [dependencies]
 float-cmp = "0.4.0"
+
+
